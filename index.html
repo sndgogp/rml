@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Rating</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: #a6dcef; /* Turquoise background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        form {
+            max-width: 400px;
+            background-color: #fff; /* White background color */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333; /* Dark gray text color */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333; /* Dark gray text color */
+        }
+
+        input[type="radio"] {
+            margin-bottom: 10px;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #4CAF50; /* Green submit button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            color: #333; /* Dark gray text color */
+        }
+
+        #reasonInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form id="ratingForm">
+        <h2>Library Rating</h2>
+        <label for="bookAvailability">Book Availability:</label>
+        <input type="radio" name="bookAvailability" value="1">1
+        <input type="radio" name="bookAvailability" value="2">2
+        <input type="radio" name="bookAvailability" value="3">3
+        <input type="radio" name="bookAvailability" value="4">4
+        <input type="radio" name="bookAvailability" value="5">5
+        <input type="radio" name="bookAvailability" value="6">6
+
+        <label for="ampleSeating">Ample Seating:</label>
+        <input type="radio" name="ampleSeating" value="1">1
+        <input type="radio" name="ampleSeating" value="2">2
+        <input type="radio" name="ampleSeating" value="3">3
+        <input type="radio" name="ampleSeating" value="4">4
+        <input type="radio" name="ampleSeating" value="5">5
+        <input type="radio" name="ampleSeating" value="6">6
+
+        <label for="childrensArea">Children's Area:</label>
+        <input type="radio" name="childrensArea" value="1">1
+        <input type="radio" name="childrensArea" value="2">2
+        <input type="radio" name="childrensArea" value="3">3
+        <input type="radio" name="childrensArea" value="4">4
+        <input type="radio" name="childrensArea" value="5">5
+        <input type="radio" name="childrensArea" value="6">6
+
+        <label for="quietRoom">Quiet Room:</label>
+        <input type="radio" name="quietRoom" value="1">1
+        <input type="radio" name="quietRoom" value="2">2
+        <input type="radio" name="quietRoom" value="3">3
+        <input type="radio" name="quietRoom" value="4">4
+        <input type="radio" name="quietRoom" value="5">5
+        <input type="radio" name="quietRoom" value="6">6
+
+        <label for="location">Location:</label>
+        <input type="radio" name="location" value="1">1
+        <input type="radio" name="location" value="2">2
+        <input type="radio" name="location" value="3">3
+        <input type="radio" name="location" value="4">4
+        <input type="radio" name="location" value="5">5
+        <input type="radio" name="location" value="6">6
+
+        <label for="visitAgain">Would you visit the library again?</label>
+        <select id="visitAgain" name="visitAgain" onchange="showReasonInput()">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <div id="reasonInput">
+            <label for="reason">Why not?</label>
+            <input type="text" id="reason" name="reason">
+        </div>
+
+        <input type="submit" value="Calculate Average">
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function showReasonInput() {
+            var visitAgainValue = document.getElementById('visitAgain').value;
+            var reasonInput = document.getElementById('reasonInput');
+
+            if (visitAgainValue === 'no') {
+                reasonInput.style.display = 'block';
+            } else {
+                reasonInput.style.display = 'none';
+            }
+        }
+
+        document.getElementById('ratingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var bookAvailability = parseInt(document.querySelector('input[name="bookAvailability"]:checked').value);
+            var ampleSeating = parseInt(document.querySelector('input[name="ampleSeating"]:checked').value);
+            var childrensArea = parseInt(document.querySelector('input[name="childrensArea"]:checked').value);
+            var quietRoom = parseInt(document.querySelector('input[name="quietRoom"]:checked').value);
+            var location = parseInt(document.querySelector('input[name="location"]:checked').value);
+
+            var visitAgain = document.getElementById('visitAgain').value;
+            var reason = document.getElementById('reason').value;
+
+            var averageRating = (bookAvailability + ampleSeating + childrensArea + quietRoom + location) / 5;
+
+            document.getElementById('result').innerHTML = "<p>Average Rating: " + averageRating.toFixed(2) + "</p>" +
+                "<p>Would you visit the library again? " + visitAgain + "</p>" +
+                (visitAgain === 'no' ? "<p>Reason: " + reason + "</p>" : "");
+        });
+    </script>
+</body>
+</html>
